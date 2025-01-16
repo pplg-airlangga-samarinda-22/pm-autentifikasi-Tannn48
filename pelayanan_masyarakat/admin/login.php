@@ -6,14 +6,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = md5($_POST['password']);
 
-    // fungsi execute_query hanya bisa digunakan pada PHP 8.2
+    // Query untuk memeriksa login
     $sql = "SELECT * FROM masyarakat WHERE nik=? AND username=? AND password=?";
     $row = $koneksi->execute_query($sql, [$nik, $username, $password]);
 
     if (mysqli_num_rows($row) == 1) {
+        $user = mysqli_fetch_assoc($row);
         session_start();
-        $_SESSION['nik'] = $nik;
-        header("location:index.php");
+        $_SESSION['nik'] = $user['nik'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role'];
+
+        // Redirect berdasarkan peran
+        if ($user['role'] === 'admin') {
+            header("location:admin_dashboard.php");
+        } else {
+            header("location:index.php");
+        }
     } else {
         echo "<script>alert('Gagal Login!')</script>";
     }
@@ -29,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <form action="" method="post" class="form-login">
-        <p>Silahkan Login</p>
+        <p>Silahkan Login Sebagai Admin</p>
         <div class="form-item">
             <label for="nik">NIK</label>
             <input type="text" name="nik" id="nik" required>
@@ -44,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <button type="submit">Login</button>
         <a href="register.php">Register</a>
-        <a href="admin/login.php">Login admin</a>
     </form>
 </body>
 
@@ -93,5 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 
+
+</html>
 
 </html>

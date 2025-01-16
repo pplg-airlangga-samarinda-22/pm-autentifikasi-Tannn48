@@ -9,15 +9,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Pelaporan Pengaduan</title>
+    <title>Halaman admin</title>
 </head>
 <body>
-    <h1>Selamat Datang di Aplikasi Pengaduan Masyarakat</h1>
+    <h1>Selamat Datang di Halaman Admin</h1>
     <nav>
         <a href="index.php">Dashboard</a>
         <a href="aduan.php">Aduan</a>
         <a href="logout.php">Logout</a>
-        <a href="admin_dashboard.php">Admin Dashboard
     </nav>
 </body>
 </html>
